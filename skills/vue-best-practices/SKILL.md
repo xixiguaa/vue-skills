@@ -27,6 +27,7 @@ Ensure strict type safety in Vue templates and components.
 | Rule | Impact | Description |
 |------|--------|-------------|
 | [vue-tsc-strict-templates](rules/vue-tsc-strict-templates.md) | HIGH | Enable strict template checking to catch undefined components |
+| [vue-define-model-generics](rules/vue-define-model-generics.md) | HIGH | Fix vue-tsc errors when using defineModel with generic components |
 
 ## How to Use
 
