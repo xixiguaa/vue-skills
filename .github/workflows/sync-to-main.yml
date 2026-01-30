@@ -8,6 +8,10 @@ on:
         required: true
         default: ''
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -25,8 +29,8 @@ jobs:
 
       - name: Sync files to main
         run: |
-          # Checkout main branch
-          git checkout main
+          # Create/update sync branch from main
+          git checkout -B sync/dev-to-main main
 
           # Remove all tracked files except .git
           git rm -rf . || true
@@ -34,11 +38,23 @@ jobs:
           # Checkout specific files from dev
           git checkout dev -- skills/ .github/ README.md AGENTS.md CLAUDE.md LICENSE
 
-          # Commit and push if there are changes
+          # Stage changes for PR
           git add -A
           if git diff --staged --quiet; then
             echo "No changes to sync"
-          else
-            git commit -m "sync: update from dev branch"
-            git push origin main
+            exit 0
           fi
+
+          # Commit and push branch
+          git commit -m "sync: update from dev branch"
+          git push -u origin sync/dev-to-main --force-with-lease
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+              --base main \
+              --head sync/dev-to-main \
+              --title "Sync dev to main" \
+              --body "Automated sync from dev branch via workflow."
