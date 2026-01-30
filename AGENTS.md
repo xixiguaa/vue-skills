@@ -33,6 +33,7 @@ This ensures TypeScript types are correct before committing.
 | **vue-testing-best-practices** | Testing with Vitest, Vue Test Utils, and Playwright for E2E. |
 | **vue-router-best-practices** | Vue Router 4 patterns, navigation guards, route params, and route-component lifecycle interactions. |
 | **vue-pinia-best-practices** | Pinia stores, state management patterns, store setup, and reactivity with stores. |
+| **vue-debug-guides** | Debugging and troubleshooting Vue 3: runtime errors, warnings, async error handling, SSR hydration issues. |
 
 ## Common Pitfalls & Best Practices
 
